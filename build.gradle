@@ -3,6 +3,8 @@ plugins {
     id 'io.spring.dependency-management' version '1.0.10.RELEASE'
     id 'java'
     id 'org.jetbrains.kotlin.jvm' version "$kotlinVersion"
+    id 'org.jetbrains.kotlin.plugin.noarg' version "$kotlinVersion"
+    id "org.jetbrains.kotlin.plugin.jpa" version "$kotlinVersion"
 }
 
 group = 'com.example'
@@ -18,10 +20,13 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation "org.axonframework:axon-spring-boot-starter:$axonVersion"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    implementation "org.jetbrains.kotlin:kotlin-reflect"
 
     runtime 'org.hsqldb:hsqldb'
 
     compileOnly 'org.projectlombok:lombok'
+
+    annotationProcessor 'org.projectlombok:lombok'
 
     testImplementation "org.axonframework:axon-test:$axonVersion"
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
