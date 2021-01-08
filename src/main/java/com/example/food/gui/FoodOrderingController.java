@@ -25,7 +25,7 @@ public class FoodOrderingController {
 
     @PostMapping("/foodcart")
     public void handle() {
-        commandGateway.send(new CreateFoodCartCommand());
+        commandGateway.send(new CreateFoodCartCommand(UUID.randomUUID()));
     }
 
     @GetMapping("/foodcart/{id}")

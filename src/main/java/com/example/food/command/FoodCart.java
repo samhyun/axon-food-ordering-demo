@@ -24,12 +24,11 @@ public class FoodCart {
 
     @CommandHandler
     public FoodCart(CreateFoodCartCommand command) {
-        UUID foodCartId = UUID.randomUUID();
-        AggregateLifecycle.apply(new FoodCartCreatedEvent(foodCartId));
+        AggregateLifecycle.apply(new FoodCartCreatedEvent(command.getFoodCartId()));
     }
 
     @CommandHandler
-    public FoodCart(SelectProductCommand command) {
+    public void handle(SelectProductCommand command) {
         AggregateLifecycle.apply(new ProductSelectedEvent(
                 foodCartId, command.getProductId(), command.getQuantity()
         ));
@@ -37,10 +36,10 @@ public class FoodCart {
 
 
     @CommandHandler
-    public FoodCart(DeselectProductCommand command) throws ProductDesectionException {
+    public void handle(DeselectProductCommand command) throws ProductDeselectionException {
         UUID productId = command.getProductId();
         if (!selectedProducts.containsKey(productId)) {
-            throw new ProductDesectionException();
+            throw new ProductDeselectionException();
         }
         AggregateLifecycle.apply(new ProductDeselectedEvent(
                 foodCartId, productId, command.getQuantity()
